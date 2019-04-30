@@ -8,10 +8,12 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Class to create a GUI for an example program to accept form submissions. The program keeps a list of several
@@ -198,14 +200,14 @@ public class DataEntryFrame extends JFrame
 
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
-			datalist.get(select).setValues(firstNameInfo.getText(),
-					middleInitialInfo.getText().charAt(0),
-					lastNameInfo.getText(),
-					displayNameInfo.getText(),
-					SSNInfo.getText(),
-					phoneInfo.getText(),
-					emailInfo.getText(), 
-					addressInfo.getText(),
+			datalist.get(select).setValues(firstName.getText(),
+					middleInitial.getFocusAccelerator(),
+					lastName.getText(),
+					displayName.getText(),
+					SSN.getText(),
+					phone.getText(),
+					email.getText(), 
+					address.getText(),
 					spanel.getSignature());
 
 			this.setVisuals(datalist.get(select));
@@ -214,14 +216,14 @@ public class DataEntryFrame extends JFrame
 			formSelect.setSelectedIndex(select);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
-			if(datalist.get(select).setValues(firstNameInfo.getText(),
-					middleInitialInfo.getText().charAt(0),
-					lastNameInfo.getText(),
-					displayNameInfo.getText(),
-					SSNInfo.getText(),
-					phoneInfo.getText(),
-					emailInfo.getText(), 
-					addressInfo.getText(),
+			if(datalist.get(select).setValues(firstName.getText(),
+					middleInitial.getFocusAccelerator(),
+					lastName.getText(),
+					displayName.getText(),
+					SSN.getText(),
+					phone.getText(),
+					email.getText(), 
+					address.getText(),
 					spanel.getSignature()) == false) {
 				errorField.setText("Error Saving Values: Save Unsuccessful");
 			}
@@ -237,6 +239,7 @@ public class DataEntryFrame extends JFrame
 			// Same code from earlier when first initializing the panel contents with just select instead of 0 in the get method
 			datalist.get(select).setValues("fn", 'm', "ln", "dn", "111111111", "1234567890",
 					"test@ou.edu", "111 first st", new ArrayList<Point>());
+			spanel.clear();
 			this.setVisuals(datalist.get(select));
 		});
 
@@ -253,6 +256,7 @@ public class DataEntryFrame extends JFrame
 		this.add(errorField);
 		
 		// Add in the import/export panel:
+		JPanel importAndExportPanel = new JPanel(new GridLayout(1, 2));
 		JButton importButton = new JButton("Import");
 
 		// TODO: Import from a file: you will import a list of FormData objects and should use this to replace
@@ -260,10 +264,26 @@ public class DataEntryFrame extends JFrame
 		importButton.addActionListener((e) -> {
 
 			// TODO: Choose a file (hint, use JFileChooser):
+			JFileChooser chooser = new JFileChooser();
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "text");
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showOpenDialog(getParent());
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		       System.out.println("You chose to open this file: " +
+		            chooser.getSelectedFile().getName());
+		    }
 			// TODO: extract object from a file (hint, use file.getAbsolutePath()):
 			//		 You will use the file to replace the datalist object. I.e. you will be loading in a new
 			//		 list of formdata.
+		    
 			// TODO: display error message on fail, else display success message
+		    if(1 == 2) {
+		    	errorField.setText("Error: Failed To Import");
+		    }
+		    else {
+		    	errorField.setText("Successfully Imported");
+		    }
 
         	// Use this code snippet to reset visuals after importing:
 			/*
@@ -283,6 +303,9 @@ public class DataEntryFrame extends JFrame
 		});
 
 		// TODO: add import/export to panel and add to frame
+		importAndExportPanel.add(importButton);
+		importAndExportPanel.add(exportButton);		
+		this.add(importAndExportPanel);
 
 		// JFrame basics:
 		this.setTitle("Example Form Fillout");
