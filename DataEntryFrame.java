@@ -207,7 +207,7 @@ public class DataEntryFrame extends JFrame
 					phoneInfo.getText(),
 					emailInfo.getText(), 
 					addressInfo.getText(),
-					this.spanel.getSignature());
+					spanel.getSignature());
 
 			this.setVisuals(datalist.get(select));
 			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
@@ -215,6 +215,20 @@ public class DataEntryFrame extends JFrame
 			formSelect.setSelectedIndex(select);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
+			if(datalist.get(select).setValues(firstNameInfo.getText(),
+					middleInitialInfo.getText().charAt(0),
+					lastNameInfo.getText(),
+					displayNameInfo.getText(),
+					SSNInfo.getText(),
+					phoneInfo.getText(),
+					emailInfo.getText(), 
+					addressInfo.getText(),
+					spanel.getSignature()) == false) {
+				errorField.setText("Error Saving Values: Save Unsuccessful");
+			}
+			else {
+				errorField.setText("Successful Save");
+			}
 		});
 
 		JButton resetForm = new JButton("Reset");
