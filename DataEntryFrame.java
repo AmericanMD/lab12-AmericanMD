@@ -170,8 +170,7 @@ public class DataEntryFrame extends JFrame
 			public void mouseDragged(MouseEvent e)
 			{
 				// TODO: add a point to the panel on drag and repaint.
-				Point mousePos = e.getPoint();
-				System.out.println("" + e.getPoint());
+				Point mousePos = e.getPoint();;
 				spanel.addPoint(mousePos);
 				spanel.repaint();
 			}
@@ -200,6 +199,15 @@ public class DataEntryFrame extends JFrame
 
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
+			datalist.get(select).setValues(firstNameInfo.getText(),
+					middleInitialInfo.getText().charAt(0),
+					lastNameInfo.getText(),
+					displayNameInfo.getText(),
+					SSNInfo.getText(),
+					phoneInfo.getText(),
+					emailInfo.getText(), 
+					addressInfo.getText(),
+					this.spanel.getSignature());
 
 			this.setVisuals(datalist.get(select));
 			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
