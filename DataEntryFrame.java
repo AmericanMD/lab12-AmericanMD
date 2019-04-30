@@ -137,14 +137,14 @@ public class DataEntryFrame extends JFrame
 
 		// TODO: add in all form-fillable components:
 		JPanel formFill = new JPanel(/* TODO: add layout manager */);
-		formFill.add(firstNameInfo);
-		formFill.add(middleInitialInfo);
-		formFill.add(lastNameInfo);
-		formFill.add(displayNameInfo);
-		formFill.add(SSNInfo);
-		formFill.add(phoneInfo);
-		formFill.add(emailInfo);
-		formFill.add(addressInfo);
+		formFill.add(firstName);
+		formFill.add(middleInitial);
+		formFill.add(lastName);
+		formFill.add(displayName);
+		formFill.add(SSN);
+		formFill.add(phone);
+		formFill.add(email);
+		formFill.add(address);
 		// TODO: add to panel...
 		this.add(formFill);
 
@@ -158,6 +158,10 @@ public class DataEntryFrame extends JFrame
 			public void mouseDragged(MouseEvent e)
 			{
 				// TODO: add a point to the panel on drag and repaint.
+				Point mousePos = getMousePosition();
+				if(spanel.contains(mousePos)) {
+					spanel.repaint(mousePos.x - 2, mousePos.y - 2, 4, 4);
+				}
 			}
 		});
 		this.add(signatureInfo);
