@@ -140,7 +140,6 @@ public class DataEntryFrame extends JFrame
 				new GridLayout(8, 2));
 		
 		// TODO: add to panel...
-		
 		this.add(formFill);
 		formFill.add(firstNameInfo);
 		formFill.add(firstName);
@@ -235,15 +234,24 @@ public class DataEntryFrame extends JFrame
 		resetForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
 			// TODO: reset the values on the selected form data
+			// Same code from earlier when first initializing the panel contents with just select instead of 0 in the get method
+			datalist.get(select).setValues("fn", 'm', "ln", "dn", "111111111", "1234567890",
+					"test@ou.edu", "111 first st", new ArrayList<Point>());
 			this.setVisuals(datalist.get(select));
 		});
 
 		// TODO: add buttons to panel and add to frame
-
+		this.add(formHandling);
+		formHandling.add(createForm);
+		formHandling.add(saveForm);
+		formHandling.add(resetForm);
+		
 		// Add in the error message field:
 		this.errorField.setEditable(false);
+		
 		// TODO: add error field to frame
-
+		this.add(errorField);
+		
 		// Add in the import/export panel:
 		JButton importButton = new JButton("Import");
 
