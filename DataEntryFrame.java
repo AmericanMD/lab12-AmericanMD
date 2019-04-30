@@ -65,7 +65,7 @@ public class DataEntryFrame extends JFrame
 	 */
 	private JLabel firstNameInfo = new JLabel("First Name:");
 	private JTextField firstName = new JTextField(15);
-	private JLabel midddleInitialInfo = new JLabel("Middle Initial:");
+	private JLabel middleInitialInfo = new JLabel("Middle Initial:");
 	private JTextField middleInitial = new JTextField(1);
 	private JLabel lastNameInfo = new JLabel("Last Name:");
 	private JTextField lastName = new JTextField(15);
@@ -95,8 +95,19 @@ public class DataEntryFrame extends JFrame
 	 */
 	private void setVisuals(FormData data)
 	{
+		/*
+		 * TestInfo
+		 * Little of Test1 and Test2, GUI, Ethics
+		 * */
 		// TODO: set the text fields and the signature as corresponding to the fields in FormData.
-		
+		firstName.setText(data.getFirstName());
+		middleInitial.setFocusAccelerator(data.getMiddleInitial());
+		lastName.setText(data.getLastName());
+		displayName.setText(data.getDisplayName());
+		SSN.setText(data.getSSN());
+		phone.setText(data.getPhone());
+		email.setText(data.getEmail());
+		address.setText(data.getAddress());		
 	}
 
 	/**
@@ -126,6 +137,14 @@ public class DataEntryFrame extends JFrame
 
 		// TODO: add in all form-fillable components:
 		JPanel formFill = new JPanel(/* TODO: add layout manager */);
+		formFill.add(firstNameInfo);
+		formFill.add(middleInitialInfo);
+		formFill.add(lastNameInfo);
+		formFill.add(displayNameInfo);
+		formFill.add(SSNInfo);
+		formFill.add(phoneInfo);
+		formFill.add(emailInfo);
+		formFill.add(addressInfo);
 		// TODO: add to panel...
 		this.add(formFill);
 
