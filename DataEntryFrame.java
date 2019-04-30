@@ -136,17 +136,29 @@ public class DataEntryFrame extends JFrame
 		this.add(formSelect);
 
 		// TODO: add in all form-fillable components:
-		JPanel formFill = new JPanel(/* TODO: add layout manager */);
-		formFill.add(firstName);
-		formFill.add(middleInitial);
-		formFill.add(lastName);
-		formFill.add(displayName);
-		formFill.add(SSN);
-		formFill.add(phone);
-		formFill.add(email);
-		formFill.add(address);
+		JPanel formFill = new JPanel(/* TODO: add layout manager */
+				new GridLayout(8, 2));
+		
 		// TODO: add to panel...
+		
 		this.add(formFill);
+		formFill.add(firstNameInfo);
+		formFill.add(firstName);
+		formFill.add(middleInitialInfo);
+		formFill.add(middleInitial);
+		formFill.add(lastNameInfo);
+		formFill.add(lastName);
+		formFill.add(displayNameInfo);
+		formFill.add(displayName);
+		formFill.add(SSNInfo);
+		formFill.add(SSN);
+		formFill.add(phoneInfo);
+		formFill.add(phone);
+		formFill.add(emailInfo);
+		formFill.add(email);
+		formFill.add(addressInfo);
+		formFill.add(address);
+		
 
 		// Add in the signature panel:
 		spanel.addMouseMotionListener(new MouseMotionListener()
@@ -158,10 +170,9 @@ public class DataEntryFrame extends JFrame
 			public void mouseDragged(MouseEvent e)
 			{
 				// TODO: add a point to the panel on drag and repaint.
-				Point mousePos = getMousePosition();
-				if(spanel.contains(mousePos)) {
-					spanel.repaint(mousePos.x - 2, mousePos.y - 2, 4, 4);
-				}
+				Point mousePos = new Point(e.getX(), e.getY());
+				spanel.addPoint(mousePos);
+				spanel.paintComponent(getGraphics());
 			}
 		});
 		this.add(signatureInfo);
