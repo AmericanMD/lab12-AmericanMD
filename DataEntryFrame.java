@@ -207,10 +207,6 @@ public class DataEntryFrame extends JFrame
 
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
-			this.setVisuals(datalist.get(select));
-			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
-			formSelect.setModel(newComboBoxModel);
-			formSelect.setSelectedIndex(select);
 			
 			datalist.get(select).setValues(firstName.getText(),
 					middleInitial.getText().charAt(0),
@@ -221,6 +217,11 @@ public class DataEntryFrame extends JFrame
 					email.getText(), 
 					address.getText(),
 					spanel.getSignature());
+			
+			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
+			formSelect.setModel(newComboBoxModel);
+			formSelect.setSelectedIndex(select);
+			this.setVisuals(datalist.get(select));
 
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
