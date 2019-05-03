@@ -2,6 +2,13 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,11 +106,11 @@ public class DataEntryFrame extends JFrame
 	{
 		/*
 		 * TestInfo
-		 * Little of Test1 and Test2, GUI, Ethics
+		 * Little of Test1 and Test2, GUI, Ethics, UML Diagrams, Unit Testing with Exceptions, DataStructures, ObjectBuilders, Stream
 		 * */
 		// TODO: set the text fields and the signature as corresponding to the fields in FormData.
 		firstName.setText(data.getFirstName());
-		middleInitial.setFocusAccelerator(data.getMiddleInitial());
+		middleInitial.setText(String.valueOf(data.getMiddleInitial()));
 		lastName.setText(data.getLastName());
 		displayName.setText(data.getDisplayName());
 		SSN.setText(data.getSSN());
@@ -200,8 +207,13 @@ public class DataEntryFrame extends JFrame
 
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
+			this.setVisuals(datalist.get(select));
+			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
+			formSelect.setModel(newComboBoxModel);
+			formSelect.setSelectedIndex(select);
+			
 			datalist.get(select).setValues(firstName.getText(),
-					middleInitial.getFocusAccelerator(),
+					middleInitial.getText().charAt(0),
 					lastName.getText(),
 					displayName.getText(),
 					SSN.getText(),
@@ -210,14 +222,10 @@ public class DataEntryFrame extends JFrame
 					address.getText(),
 					spanel.getSignature());
 
-			this.setVisuals(datalist.get(select));
-			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
-			formSelect.setModel(newComboBoxModel);
-			formSelect.setSelectedIndex(select);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
 			if(datalist.get(select).setValues(firstName.getText(),
-					middleInitial.getFocusAccelerator(),
+					middleInitial.getText().charAt(0),
 					lastName.getText(),
 					displayName.getText(),
 					SSN.getText(),
@@ -225,10 +233,10 @@ public class DataEntryFrame extends JFrame
 					email.getText(), 
 					address.getText(),
 					spanel.getSignature()) == false) {
-				errorField.setText("Error Saving Values: Save Unsuccessful");
+				errorField.setText("Error: Saving Values Unsuccessful");
 			}
 			else {
-				errorField.setText("Successful Save");
+				errorField.setText("Successfully Saved");
 			}
 		});
 
@@ -265,24 +273,38 @@ public class DataEntryFrame extends JFrame
 
 			// TODO: Choose a file (hint, use JFileChooser):
 			JFileChooser chooser = new JFileChooser();
-		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-		        "text");
-		    chooser.setFileFilter(filter);
-		    int returnVal = chooser.showOpenDialog(getParent());
-		    if(returnVal == JFileChooser.APPROVE_OPTION) {
-		       System.out.println("You chose to open this file: " +
-		            chooser.getSelectedFile().getName());
-		    }
+			
+			if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				File file = chooser.getSelectedFile();
+				String fName = "";
+				fName = chooser.getSelectedFile().getName();
+				try {
+					FileInputStream fis = new FileInputStream(fName);
+					ObjectInputStream ois = new ObjectInputStream(fis);
+					datalist = (ArrayList<FormData>)ois.readObject();
+					fis.close();
+					ois.close();
+					errorField.setText("Successfully Imported");
+				}
+				catch(FileNotFoundException fnfe){
+					fnfe.printStackTrace();
+					errorField.setText("Error: File Not Found");
+				}
+				catch(IOException ioe) {
+					ioe.printStackTrace();
+					errorField.setText("Error: Fill Cannot Be Imported");
+				}
+				catch(ClassNotFoundException cnfe) {
+					
+				}
+			}
 			// TODO: extract object from a file (hint, use file.getAbsolutePath()):
 			//		 You will use the file to replace the datalist object. I.e. you will be loading in a new
 			//		 list of formdata.
 		    
 			// TODO: display error message on fail, else display success message
-		    if(1 == 2) {
-		    	errorField.setText("Error: Failed To Import");
-		    }
 		    else {
-		    	errorField.setText("Successfully Imported");
+		    	errorField.setText("Error: Could Not Import Successfully");
 		    }
 
         	// Use this code snippet to reset visuals after importing:
@@ -300,6 +322,34 @@ public class DataEntryFrame extends JFrame
 			// TODO: Choose a file (hint, use JFileChooser):
 			// TODO: export datalist from a file (hint, use file.getAbsolutePath()):
 			// TODO: display error message on fail, else display success message
+			JFileChooser chooser = new JFileChooser();
+			
+			if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				File file = chooser.getSelectedFile();
+				String fName = "";
+				fName = chooser.getSelectedFile().getName();
+				try {
+					FileOutputStream fos = new FileOutputStream(fName);
+					ObjectOutputStream oos = new ObjectOutputStream(fos);
+					oos.writeObject(datalist);
+					fos.close();
+					oos.close();
+					errorField.setText("Successfully Exported");
+				}
+				catch(FileNotFoundException fnfe){
+					fnfe.printStackTrace();
+					errorField.setText("Error: File Not Found");
+				}
+				catch(IOException ioe) {
+					ioe.printStackTrace();
+					errorField.setText("Error: Fill Cannot Be Imported");
+				}
+			}
+			
+			//chooser.getSelectedFile()
+			//FileOutputStream ops = new FileOutputStream(j);
+			//ObjectOutputStream oos = new ObjectOutputStream(ops);
+			
 		});
 
 		// TODO: add import/export to panel and add to frame
